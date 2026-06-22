@@ -2,7 +2,8 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-const db = new Database(path.join(__dirname, 'prokip.db'));
+const dbPath = process.env.DB_PATH || path.join(__dirname, 'prokip.db');
+const db = new Database(dbPath);
 
 // Enable WAL mode for better performance
 db.pragma('journal_mode = WAL');
