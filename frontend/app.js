@@ -83,6 +83,16 @@ const API = {
     return await res.json();
   },
 
+  async updateStatus(id, status) {
+    const res = await fetch(`${API_BASE}/admin/appointments/${id}/status`, {
+      method: 'PATCH',
+      headers: this._authHeaders(),
+      body: JSON.stringify({ status })
+    });
+    if (!res.ok) { const j = await res.json(); throw new Error(j.error); }
+    return await res.json();
+  },
+
   async deleteAppointment(id) {
     const res = await fetch(`${API_BASE}/admin/appointments/${id}`, {
       method: 'DELETE',
@@ -406,6 +416,7 @@ Router.register('/admin/spotlight-appointments', () => {
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Contact</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Location</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Appointment</th>
+                <th class="px-4 py-3 text-left font-medium text-gray-500">Status</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Notes</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Submitted</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500"></th>
@@ -505,6 +516,7 @@ function renderTable(data) {
       <td class="px-4 py-3"><div class="text-gray-600">${esc(a.email)}</div><div class="text-gray-400 text-xs">${esc(a.phone)}</div></td>
       <td class="px-4 py-3"><div class="text-gray-600">${esc(a.city)}, ${esc(a.state)}</div><div class="text-gray-400 text-xs">${esc(a.business_address)}</div></td>
       <td class="px-4 py-3"><span class="inline-flex items-center gap-1 bg-prokip-50 text-prokip-700 px-2 py-1 rounded-md text-xs font-medium">${a.appointment_date} · ${a.appointment_time}</span></td>
+      <td class="px-4 py-3"><select onchange="updateStatus(${a.id}, this.value)" class="text-xs px-2 py-1 rounded-md border border-gray-200 font-medium ${statusColor(a.status || 'Pending')}"><option value="Pending" ${(a.status||'Pending')==='Pending'?'selected':''}>Pending</option><option value="Confirmed" ${a.status==='Confirmed'?'selected':''}>Confirmed</option><option value="Completed" ${a.status==='Completed'?'selected':''}>Completed</option><option value="Cancelled" ${a.status==='Cancelled'?'selected':''}>Cancelled</option></select></td>
       <td class="px-4 py-3 text-gray-500 text-xs max-w-[200px] truncate" title="${esc(a.notes || '')}">${esc(a.notes || '—')}</td>
       <td class="px-4 py-3 text-gray-400 text-xs">${new Date(a.created_at).toLocaleDateString()}</td>
       <td class="px-4 py-3">
@@ -537,15 +549,27 @@ async function loadCityView() {
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
-              <thead class="bg-gray-50"><tr><th class="px-4 py-2 text-left font-medium text-gray-500">Time</th><th class="px-4 py-2 text-left font-medium text-gray-500">Business</th><th class="px-4 py-2 text-left font-medium text-gray-500">Customer</th><th class="px-4 py-2 text-left font-medium text-gray-500">Phone</th><th class="px-4 py-2 text-left font-medium text-gray-500">Address</th></tr></thead>
+              <thead class="bg-gray-50"><tr><th class="px-4 py-2 text-left font-medium text-gray-500">Time</th><th class="px-4 py-2 text-left font-medium text-gray-500">Business</th><th class="px-4 py-2 text-left font-medium text-gray-500">Customer</th><th class="px-4 py-2 text-left font-medium text-gray-500">Phone</th><th class="px-4 py-2 text-left font-medium text-gray-500">Status</th><th class="px-4 py-2 text-left font-medium text-gray-500">Address</th></tr></thead>
               <tbody class="divide-y divide-gray-50">${apts.map(a=>`
-                <tr class="hover:bg-gray-50"><td class="px-4 py-2"><span class="bg-prokip-50 text-prokip-700 px-2 py-0.5 rounded text-xs font-medium">${a.appointment_date}<br>${a.appointment_time}</span></td><td class="px-4 py-2 font-medium text-gray-800">${esc(a.business_name)}</td><td class="px-4 py-2 text-gray-600">${esc(a.client_name)}</td><td class="px-4 py-2 text-gray-600">${esc(a.phone)}</td><td class="px-4 py-2 text-gray-500 text-xs">${esc(a.business_address)}</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2"><span class="bg-prokip-50 text-prokip-700 px-2 py-0.5 rounded text-xs font-medium">${a.appointment_date}<br>${a.appointment_time}</span></td><td class="px-4 py-2 font-medium text-gray-800">${esc(a.business_name)}</td><td class="px-4 py-2 text-gray-600">${esc(a.client_name)}</td><td class="px-4 py-2 text-gray-600">${esc(a.phone)}</td><td class="px-4 py-2"><span class="text-xs font-medium px-2 py-0.5 rounded ${statusColor(a.status||'Pending')}">${a.status||'Pending'}</span></td><td class="px-4 py-2 text-gray-500 text-xs">${esc(a.business_address)}</td></tr>
               `).join('')}</tbody>
             </table>
           </div>
         </div>`;
     }).join('');
   } catch (err) { console.error(err); }
+}
+
+function statusColor(s) {
+  return { Pending:'bg-yellow-50 text-yellow-700', Confirmed:'bg-green-50 text-green-700', Completed:'bg-blue-50 text-blue-700', Cancelled:'bg-red-50 text-red-700' }[s] || '';
+}
+
+async function updateStatus(id, status) {
+  try {
+    await API.updateStatus(id, status);
+    showToast(`Status updated to ${status}`, 'success');
+    await applyFilters();
+  } catch (err) { showToast(err.message, 'error'); }
 }
 
 async function deleteApt(id) {
