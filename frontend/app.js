@@ -228,7 +228,7 @@ Router.register('/spotlight', () => {
     <nav class="bg-white shadow-sm sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <img src="prokip-logo.png" alt="Prokip" class="w-12 h-12 rounded-lg object-contain">
+          <img src="prokip-logo.png" alt="Prokip" class="w-20 h-20 rounded-lg object-contain">
           
         </div>
         <span></span>
@@ -354,7 +354,7 @@ Router.register('/admin/login', () => {
     <div class="min-h-screen flex items-center justify-center px-4 bg-gray-50">
       <div class="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md fade-in">
         <div class="text-center mb-8">
-          <img src="prokip-logo.png" alt="Prokip" class="w-12 h-12 rounded-xl object-contain mx-auto mb-4">
+          <img src="prokip-logo.png" alt="Prokip" class="w-20 h-20 rounded-xl object-contain mx-auto mb-4">
           <h1 class="text-2xl font-bold">Admin Login</h1>
           <p class="text-gray-500 text-sm mt-1">Sign in to manage appointments</p>
         </div>
@@ -381,7 +381,7 @@ Router.register('/admin/spotlight-appointments', () => {
     <nav class="bg-white shadow-sm sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="prokip-logo.png" alt="Prokip" class="w-12 h-12 rounded-lg object-contain">
+          <img src="prokip-logo.png" alt="Prokip" class="w-20 h-20 rounded-lg object-contain">
           
         </div>
         <div class="flex items-center gap-4">
