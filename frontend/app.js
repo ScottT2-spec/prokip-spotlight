@@ -115,6 +115,7 @@ const Router = {
       if (handler) {
         document.getElementById('app').innerHTML = handler();
         if (window.__afterRender) { window.__afterRender(); window.__afterRender = null; }
+        if (window.lucide) lucide.createIcons();
       } else {
         Router.navigate('/spotlight');
       }
@@ -181,7 +182,7 @@ Router.register('/spotlight', () => {
         e.preventDefault();
         const btn = form.querySelector('button[type="submit"]');
         btn.disabled = true;
-        btn.innerHTML = '<span class="inline-block animate-spin mr-2">⏳</span> Booking...';
+        btn.innerHTML = '<i data-lucide="loader-2" class="inline-block w-5 h-5 animate-spin mr-2"></i> Booking...';
 
         const fd = new FormData(form);
         const data = Object.fromEntries(fd.entries());
@@ -227,7 +228,7 @@ Router.register('/spotlight', () => {
     <section class="hero-gradient text-white py-20 px-4">
       <div class="max-w-4xl mx-auto text-center fade-in">
         <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-          <span class="text-yellow-300">⭐</span><span class="text-sm font-medium">You've Been Selected</span>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-300"></i><span class="text-sm font-medium">You've Been Selected</span>
         </div>
         <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6">Prokip Customer<br>Spotlight Series</h1>
         <p class="text-lg md:text-xl text-prokip-100 max-w-2xl mx-auto leading-relaxed">We are excited to feature outstanding businesses across Nigeria that are growing, operating with excellence, and using Prokip to improve their daily operations.</p>
@@ -248,16 +249,16 @@ Router.register('/spotlight', () => {
         <p class="text-gray-500 text-center mb-12">By participating, your business will enjoy these benefits</p>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           ${[
-            {icon:'🎬',title:'Professional Video',desc:'A professionally produced customer spotlight video at no cost'},
-            {icon:'📱',title:'Social Media Clips',desc:'Edited social media clips and professional photos'},
-            {icon:'📢',title:'Brand Exposure',desc:"Exposure across Prokip's social media platforms, website, and business community"},
-            {icon:'🏆',title:'Featured Business',desc:'Recognition as a Prokip Featured Business'},
-            {icon:'🛡️',title:'Digital Badge',desc:'A digital Prokip Featured Business Badge'},
-            {icon:'💎',title:'Prokip Premium',desc:'One year complimentary access to Prokip Premium worth ₦180,000'},
-            {icon:'🎁',title:'Merch Package',desc:'Prokip-branded business merchandise package'},
+            {icon:'video',title:'Professional Video',desc:'A professionally produced customer spotlight video at no cost'},
+            {icon:'smartphone',title:'Social Media Clips',desc:'Edited social media clips and professional photos'},
+            {icon:'megaphone',title:'Brand Exposure',desc:"Exposure across Prokip's social media platforms, website, and business community"},
+            {icon:'trophy',title:'Featured Business',desc:'Recognition as a Prokip Featured Business'},
+            {icon:'shield-check',title:'Digital Badge',desc:'A digital Prokip Featured Business Badge'},
+            {icon:'gem',title:'Prokip Premium',desc:'One year complimentary access to Prokip Premium worth ₦180,000'},
+            {icon:'gift',title:'Merch Package',desc:'Prokip-branded business merchandise package'},
           ].map(b => `
             <div class="benefit-card bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-              <div class="text-3xl mb-3">${b.icon}</div>
+              <div class="w-10 h-10 bg-prokip-50 rounded-lg flex items-center justify-center mb-3"><i data-lucide="${b.icon}" class="w-5 h-5 text-prokip-600"></i></div>
               <h3 class="font-semibold text-lg mb-2">${b.title}</h3>
               <p class="text-gray-500 text-sm leading-relaxed">${b.desc}</p>
             </div>
@@ -431,6 +432,7 @@ function switchTab(tab) {
   document.getElementById('tableView').classList.toggle('hidden', tab!=='table');
   document.getElementById('cityView').classList.toggle('hidden', tab!=='city');
   if (tab === 'city') loadCityView();
+  if (window.lucide) lucide.createIcons();
 }
 
 async function loadDashboard() {
@@ -476,6 +478,7 @@ async function applyFilters() {
     allAppointments = result.appointments;
     renderTable(allAppointments);
     if (currentTab === 'city') loadCityView();
+    if (window.lucide) lucide.createIcons();
   } catch (err) {
     console.error(err);
   }
@@ -526,7 +529,7 @@ async function loadCityView() {
       return `
         <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
           <div class="bg-prokip-50 px-5 py-3 flex items-center justify-between border-b border-prokip-100">
-            <h3 class="font-semibold text-prokip-800">📍 ${esc(city)}</h3>
+            <h3 class="font-semibold text-prokip-800 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4"></i> ${esc(city)}</h3>
             <span class="bg-prokip-600 text-white text-xs font-medium px-2.5 py-1 rounded-full">${apts.length} appointment${apts.length>1?'s':''}</span>
           </div>
           <div class="overflow-x-auto">
