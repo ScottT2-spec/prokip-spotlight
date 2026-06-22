@@ -218,8 +218,8 @@ Router.register('/spotlight', () => {
     <nav class="bg-white shadow-sm sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <img src="prokip-logo.png" alt="Prokip" class="w-8 h-8 rounded-lg object-contain">
-          <span class="font-bold text-xl text-prokip-800">Prokip</span>
+          <img src="prokip-logo.png" alt="Prokip" class="w-12 h-12 rounded-lg object-contain">
+          
         </div>
         <span></span>
       </div>
@@ -371,8 +371,8 @@ Router.register('/admin/spotlight-appointments', () => {
     <nav class="bg-white shadow-sm sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="prokip-logo.png" alt="Prokip" class="w-8 h-8 rounded-lg object-contain">
-          <span class="font-bold text-lg text-prokip-800">Prokip Admin</span>
+          <img src="prokip-logo.png" alt="Prokip" class="w-12 h-12 rounded-lg object-contain">
+          
         </div>
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-500">${esc(session.name)}</span>
