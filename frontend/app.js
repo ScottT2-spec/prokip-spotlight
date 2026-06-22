@@ -221,7 +221,7 @@ Router.register('/spotlight', () => {
           <img src="prokip-logo.png" alt="Prokip" class="w-8 h-8 rounded-lg object-contain">
           <span class="font-bold text-xl text-prokip-800">Prokip</span>
         </div>
-        <a href="#/admin/login" class="text-sm text-gray-500 hover:text-prokip-600 transition">Admin</a>
+        <span></span>
       </div>
     </nav>
 
@@ -231,7 +231,8 @@ Router.register('/spotlight', () => {
           <i data-lucide="star" class="w-4 h-4 text-yellow-300"></i><span class="text-sm font-medium">You've Been Selected</span>
         </div>
         <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6">Prokip Customer<br>Spotlight Series</h1>
-        <p class="text-lg md:text-xl text-prokip-100 max-w-2xl mx-auto leading-relaxed">We are excited to feature outstanding businesses across Nigeria that are growing, operating with excellence, and using Prokip to improve their daily operations.</p>
+        <p class="text-lg md:text-xl text-prokip-100 max-w-2xl mx-auto leading-relaxed mb-8">We are excited to feature outstanding businesses across Nigeria that are growing, operating with excellence, and using Prokip to improve their daily operations.</p>
+        <a href="#booking" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" class="inline-block bg-prokip-500 hover:bg-prokip-600 text-white font-semibold px-8 py-3 rounded-lg transition shadow-lg">Get Started</a>
       </div>
     </section>
 
@@ -273,7 +274,7 @@ Router.register('/spotlight', () => {
         <p class="text-gray-500 text-center mb-10">Select your preferred date and time for our media team to visit.<br>Available dates: <strong>25th – 30th</strong> · <strong>8:00 AM – 4:00 PM</strong></p>
         <form id="bookingForm" class="space-y-5">
           <div class="grid md:grid-cols-2 gap-5">
-            <div><label class="block text-sm font-medium text-gray-700 mb-1">Client Name <span class="text-red-500">*</span></label><input type="text" name="client_name" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-prokip-500 focus:border-prokip-500 outline-none transition" placeholder="Your full name"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label><input type="text" name="client_name" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-prokip-500 focus:border-prokip-500 outline-none transition" placeholder="Your full name"></div>
             <div><label class="block text-sm font-medium text-gray-700 mb-1">Business Name <span class="text-red-500">*</span></label><input type="text" name="business_name" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-prokip-500 focus:border-prokip-500 outline-none transition" placeholder="Your business name"></div>
           </div>
           <div class="grid md:grid-cols-2 gap-5">
@@ -405,6 +406,7 @@ Router.register('/admin/spotlight-appointments', () => {
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Contact</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Location</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Appointment</th>
+                <th class="px-4 py-3 text-left font-medium text-gray-500">Notes</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500">Submitted</th>
                 <th class="px-4 py-3 text-left font-medium text-gray-500"></th>
               </tr>
@@ -503,6 +505,7 @@ function renderTable(data) {
       <td class="px-4 py-3"><div class="text-gray-600">${esc(a.email)}</div><div class="text-gray-400 text-xs">${esc(a.phone)}</div></td>
       <td class="px-4 py-3"><div class="text-gray-600">${esc(a.city)}, ${esc(a.state)}</div><div class="text-gray-400 text-xs">${esc(a.business_address)}</div></td>
       <td class="px-4 py-3"><span class="inline-flex items-center gap-1 bg-prokip-50 text-prokip-700 px-2 py-1 rounded-md text-xs font-medium">${a.appointment_date} · ${a.appointment_time}</span></td>
+      <td class="px-4 py-3 text-gray-500 text-xs max-w-[200px] truncate" title="${esc(a.notes || '')}">${esc(a.notes || '—')}</td>
       <td class="px-4 py-3 text-gray-400 text-xs">${new Date(a.created_at).toLocaleDateString()}</td>
       <td class="px-4 py-3">
         <button onclick="deleteApt(${a.id})" class="text-red-400 hover:text-red-600 transition" title="Delete">
