@@ -385,7 +385,6 @@ Router.register('/admin/spotlight-appointments', () => {
           
         </div>
         <div class="flex items-center gap-4">
-          <span class="text-sm text-gray-500">${esc(session.name)}</span>
           <button onclick="API.logout(); Router.navigate('/admin/login');" class="text-sm text-red-500 hover:text-red-700 font-medium transition">Logout</button>
         </div>
       </div>
