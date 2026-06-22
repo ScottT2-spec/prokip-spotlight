@@ -575,7 +575,7 @@ function esc(str) { const d = document.createElement('div'); d.textContent = str
 function showToast(msg, type='info') {
   const container = document.getElementById('toast-container');
   if (!container) return;
-  const colors = { error:'bg-red-500', success:'bg-prokip-600', info:'bg-gray-700' };
+  const colors = { error:'bg-red-500', success:'bg-amber-600', info:'bg-gray-700' };
   const toast = document.createElement('div');
   toast.className = `${colors[type]} text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium fade-in max-w-sm`;
   toast.textContent = msg;
