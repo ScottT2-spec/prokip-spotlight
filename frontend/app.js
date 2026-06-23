@@ -1,5 +1,5 @@
 // ==================== API LAYER ====================
-const API_BASE = 'https://scott-123-prokip-spotlight-api.hf.space/api';
+const API_BASE = '/api';
 
 const API = {
   async bookAppointment(data) {
