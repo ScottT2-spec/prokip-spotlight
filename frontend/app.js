@@ -158,7 +158,7 @@ function getBookingDates() {
   const year = now.getFullYear();
   const month = now.getMonth();
   const dates = [];
-  for (let d = 25; d <= 30; d++) {
+  for (let d = 2nd July; d <= 5th of July; d++) {
     const date = new Date(year, month, d);
     if (date.getMonth() === month) {
       dates.push({ value: `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`, label: `${getMonthName(month)} ${d}, ${year}` });
